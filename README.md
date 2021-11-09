@@ -1,70 +1,170 @@
-# Getting Started with Create React App
+# React
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Basic
 
-## Available Scripts
+### Component
 
-In the project directory, you can run:
+1.
 
-### `yarn start`
+**App.js**
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+```javascript
+import React from 'react';
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+const Header = () => {
+	return (
+		<header>
+			<h1>Header</h1>
+		</header>
+	);
+};
 
-### `yarn test`
+const App = (props) => {
+	return <Header />;
+};
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+export default App;
+```
 
-### `yarn build`
+2.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+**App.js**
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+```javascript
+import React from 'react';
+import Header from './components/Header';
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+const App = (props) => {
+	return <Header />;
+};
 
-### `yarn eject`
+export default App;
+```
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+**Header.js**
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+```javascript
+import React from 'react';
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+const Header = (props) => <h1>Header</h1>;
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+export default Header;
+```
 
-## Learn More
+### Props
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+```javascript
+import React from 'react';
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+const Header = (props) => <h1>Welcome, {props.name}</h1>;
 
-### Code Splitting
+const Footer = (props) => {
+	// destructuring
+	const { year } = props;
+	return <div>copyright {year}</div>;
+};
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+const App = (props) => {
+	return (
+		<React.Fragment>
+			<Header name='Grace' />
+			<Footer year={new Date().getFullYear()} />
+		</React.Fragment>
+	);
+};
 
-### Analyzing the Bundle Size
+export default App;
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+**Result**
+![result](/src/assets/images/1.png)
 
-### Making a Progressive Web App
+#### Working with list
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+**App.js**
 
-### Advanced Configuration
+```javascript
+import React from 'react';
+import SkillsList from './components/SkillsList';
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+const App = (props) => {
+	const skills = ['HTML5', 'CSS3', 'JavaScript', 'React'];
 
-### Deployment
+	return (
+		<React.Fragment>
+			<SkillsList skills={skills} />
+		</React.Fragment>
+	);
+};
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+export default App;
+```
 
-### `yarn build` fails to minify
+**SkillsList.js**
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+```javascript
+import React from 'react';
+
+const SkillsList = ({ skills }) => {
+	return (
+		<ul>
+			{skills.map((skill) => (
+				<li>{skill}</li>
+			))}
+		</ul>
+	);
+};
+
+export default SkillsList;
+```
+
+**Result**
+![result](/src/assets/images/2.png)
+
+_Key props have to be included_
+
+**App.js**
+
+```javascript
+import React from 'react';
+import SkillsList from './components/SkillsList';
+
+const App = (props) => {
+	const skills = ['HTML5', 'CSS3', 'JavaScript', 'React'];
+	// const skillObjs = skills.map((skill, i) => ({ id: i, title: skill }));
+	const skillObjs = [
+		{ id: 1, title: 'HTML5' },
+		{ id: 2, title: 'CSS3' },
+		{ id: 3, title: 'JavaScript' },
+		{ id: 4, title: 'React' },
+	];
+
+	return (
+		<React.Fragment>
+			<SkillsList skills={skillObjs} />
+		</React.Fragment>
+	);
+};
+
+export default App;
+```
+
+**SkillsList.js**
+
+```javascript
+import React from 'react';
+
+const SkillsList = ({ skills }) => {
+	return (
+		<ul>
+			{skills.map((skill) => (
+				<li key={skill.id}>{skill.title}</li>
+			))}
+		</ul>
+	);
+};
+
+export default SkillsList;
+```
+
+### State
