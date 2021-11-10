@@ -168,3 +168,29 @@ export default SkillsList;
 ```
 
 ### State
+
+```javascript
+import React, { useState } from 'react';
+
+const App = (props) => {
+	const [number, setNumber] = useState(0);
+
+	const increaseNumber = () => {
+		setNumber(number + 1);
+	};
+
+	const decreaseNumber = () => {
+		setNumber(number - 1);
+	};
+
+	return (
+		<>
+			<h1>number: {number}</h1>
+			<button onClick={decreaseNumber}>-</button>
+			<button onClick={increaseNumber}>+</button>
+		</>
+	);
+};
+
+export default App;
+```
