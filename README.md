@@ -167,7 +167,9 @@ const SkillsList = ({ skills }) => {
 export default SkillsList;
 ```
 
-### State
+### Hooks
+
+#### useState
 
 ```javascript
 import React, { useState } from 'react';
@@ -193,4 +195,57 @@ const App = (props) => {
 };
 
 export default App;
+```
+
+#### useEffect
+
+- Data fetching
+
+**App.js**
+
+```javascript
+import React from 'react';
+
+import './App.css';
+import User from './components/User';
+
+const App = () => {
+	return (
+		<div className='app'>
+			<User login='mojombo' />
+		</div>
+	);
+};
+
+export default App;
+```
+
+**User.js**
+
+```javascript
+import React, { useEffect, useState } from 'react';
+
+const User = ({ login }) => {
+	const [data, setData] = useState(null);
+
+	useEffect(() => {
+		fetch(`https://api.github.com/users/${login}`)
+			.then((res) => res.json())
+			.then(setData)
+			.catch(console.error);
+	}, [login]);
+
+	if (data) {
+		return (
+			<div>
+				<h1>{data.login}</h1>
+				<img width='200px' src={data.avatar_url} alt='user profile' />
+			</div>
+		);
+	}
+
+	return null;
+};
+
+export default User;
 ```
