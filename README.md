@@ -171,6 +171,8 @@ export default SkillsList;
 
 #### useState
 
+##### Example 1
+
 ```javascript
 import React, { useState } from 'react';
 
@@ -197,9 +199,38 @@ const App = (props) => {
 export default App;
 ```
 
+##### Example 2
+
+```javascript
+import React, { useState } from 'react';
+
+import './App.css';
+
+const CheckBox = () => {
+	const [checked, setChecked] = useState(false);
+
+	return (
+		<>
+			<input
+				type='checkbox'
+				value={checked}
+				onChange={() => setChecked((checked) => !checked)}
+			/>
+			{checked ? 'checked' : 'not checked'}
+		</>
+	);
+};
+
+const App = () => {
+	return <CheckBox />;
+};
+
+export default App;
+```
+
 #### useEffect
 
-- Data fetching
+##### Data fetching example
 
 **App.js**
 
@@ -249,3 +280,64 @@ const User = ({ login }) => {
 
 export default User;
 ```
+
+##### Manually update DOM example
+
+**Without using useEffect**
+
+```javascript
+import React, { useState } from 'react';
+
+const App = () => {
+	const [count, setCount] = useState(0);
+
+	return (
+		<div>
+			<p>You clicked {count} times</p>
+			<button
+				onClick={() => {
+					setCount(count + 1);
+					document.title = `You clicked ${count} times`;
+				}}
+			>
+				Click me
+			</button>
+		</div>
+	);
+};
+
+export default App;
+```
+
+![result](/src/assets/images/useEffect1.png)
+
+**Using useEffect**
+
+```javascript
+import React, { useState, useEffect } from 'react';
+
+const App = () => {
+	const [count, setCount] = useState(0);
+
+	useEffect(() => {
+		document.title = `You clicked ${count} times`;
+	});
+
+	return (
+		<div>
+			<p>You clicked {count} times</p>
+			<button
+				onClick={() => {
+					setCount(count + 1);
+				}}
+			>
+				Click me
+			</button>
+		</div>
+	);
+};
+
+export default App;
+```
+
+![result](/src/assets/images/useEffect2.png)
