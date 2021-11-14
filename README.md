@@ -228,6 +228,31 @@ const App = () => {
 export default App;
 ```
 
+_In this case, useReducer can be useful_
+
+```javascript
+import React, { useReducer } from 'react';
+
+import './App.css';
+
+const CheckBox = () => {
+	const [checked, toggle] = useReducer((checked) => !checked, false);
+
+	return (
+		<>
+			<input type='checkbox' value={checked} onChange={toggle} />
+			{checked ? 'checked' : 'not checked'}
+		</>
+	);
+};
+
+const App = () => {
+	return <CheckBox />;
+};
+
+export default App;
+```
+
 #### useEffect
 
 ##### Data fetching example
